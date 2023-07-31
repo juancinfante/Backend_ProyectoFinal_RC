@@ -3,7 +3,7 @@ const Usuario = require('../models/usuario.model');
 const bcrypt = require('bcrypt');
 
 const crearUsuario = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     //Manejo de errores
     const errors = validationResult(req);
