@@ -1,9 +1,17 @@
+const { validationResult } = require("express-validator");
 const Usuario = require('../models/usuario.model');
 const bcrypt = require('bcrypt');
 
 const crearUsuario = async (req, res) => {
     const { name, email, password } = req.body;
-    console.log(name, email, password)
+
+    //Manejo de errores
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.json({
+            errors: errors.mapped()
+        })
+    }
 
     // Validar si el email ya existe
     try {
@@ -31,8 +39,48 @@ const crearUsuario = async (req, res) => {
     }
 }
 
+const loguearUsuario = async (req, res) => {
+    const { email, password } = req.body;
+
+    //Manejo de errores
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.json({
+            errors: errors.mapped()
+        })
+    }
+
+    // Validar si el email ya existe
+    try {
+        let usuarioExiste = await Usuario.findOne({ email });
+        if (!usuarioExiste) {
+            return res.json({
+                msg: "Email o contraseña incorrectos."
+            });
+        }else{
+            // Ademas de chequear email debemos chequear contraseña
+            const validarContraseña = bcrypt.compareSync(password, usuarioExiste.password);
+            if (!validarContraseña) {
+                return res.status(400).json({
+                    msg: "Email o contraseña incorrectos"
+                })
+            }
+
+            res.status(201).json({
+                msg: "Logueado con exito!",
+                usuarioExiste
+            })
+        }
+
+        
+
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 module.exports = {
-    crearUsuario
+    crearUsuario,
+    loguearUsuario
 };
