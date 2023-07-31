@@ -1,9 +1,17 @@
+const { validationResult } = require("express-validator");
 const Usuario = require('../models/usuario.model');
 const bcrypt = require('bcrypt');
 
 const crearUsuario = async (req, res) => {
     const { name, email, password } = req.body;
-    console.log(name, email, password)
+
+    //Manejo de errores
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.json({
+            errors: errors.mapped()
+        })
+    }
 
     // Validar si el email ya existe
     try {
