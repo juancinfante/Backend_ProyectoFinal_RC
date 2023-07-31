@@ -11,9 +11,8 @@ router.post('/register', [
 ], crearUsuario);
 
 router.post('/login', [
-    check('email','Email no valido').isEmail(),
-    check('password','El password debe ser mayor a 5 caracteres.').isLength({min:5}),
-], loguearUsuario);
+    check('email','Email no valido.').isEmail()
+] ,loguearUsuario);
 
 
 
