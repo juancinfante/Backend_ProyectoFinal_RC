@@ -68,7 +68,7 @@ const loguearUsuario = async (req, res) => {
     try {
         let usuarioExiste = await Usuario.findOne({ email });
         if (!usuarioExiste) {
-            return res.json({
+            return res.status(400).json({
                 msg: "Email o contraseña incorrectos."
             });
         }else{
@@ -88,12 +88,16 @@ const loguearUsuario = async (req, res) => {
         }
 
         const token = jwt.sign(payload,process.env.SECRET_JWT,{
-            expiresIn: "6000ms",
+            expiresIn: "10000ms",
         });
 
             res.status(201).json({
                 msg: "Logueado con exito!",
+                name: usuarioExiste.name,
+                id: usuarioExiste._id,
+                rol: usuarioExiste.rol,
                 token
+
             })
         }
 
@@ -103,12 +107,14 @@ const loguearUsuario = async (req, res) => {
     }
 }
 
-const editarUsuario = () => {
-    
+const validarUsuario = (req, res) => {
+    res.status(200).json({
+        ok: true,
+    });
 }
 
 module.exports = {
     crearUsuario,
     loguearUsuario,
-    editarUsuario
+    validarUsuario
 };
