@@ -17,6 +17,7 @@ app.use(express.json());
 
 // RUTAS
 app.use('/auth', require('./rutas/auth'));
+app.use('/admin', require('./rutas/admin'));
 
 
 
