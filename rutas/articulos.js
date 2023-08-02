@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Articulo = require('../models/articulo');
-const { validarJWT } = require('../validarJWT');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 // Obtener todos los artículos
 router.get('/', async (req, res) => {
@@ -27,15 +27,15 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Crear un nuevo artículo (requiere autenticación con JWT)
-router.post('/', validarJWT, async (req, res) => {
+// Crear un nuevo artículo 
+router.post('/', async (req, res) => {
   try {
     const { titulo, contenido } = req.body;
-    const nuevoArticulo = new Articulo({ titulo, contenido, autor: req.payload.id }); // Usamos el ID del usuario del token como autor
+    const nuevoArticulo = new Articulo({ titulo, contenido }); // Usamos el ID del usuario del token como autor
     await nuevoArticulo.save();
     res.json(nuevoArticulo);
   } catch (error) {
-    res.status(500).json({ error: 'Error al crear el artículo.' });
+    res.status(500).json({ error: 'Error al crear el artículo.' + error });
   }
 });
 
@@ -58,7 +58,7 @@ router.put('/:id', validarJWT, async (req, res) => {
 });
 
 // Eliminar un artículo por su ID (requiere autenticación con JWT)
-router.delete('/:id', validarJWT, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const articulo = await Articulo.findByIdAndRemove(req.params.id);
     if (!articulo) {
