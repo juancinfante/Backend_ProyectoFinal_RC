@@ -1,6 +1,7 @@
 const express = require('express');
-const { crearUsuario, loguearUsuario } = require('../controllers/auth.controller');
+const { crearUsuario, loguearUsuario, validarUsuario } = require('../controllers/auth.controller');
 const { check } = require('express-validator');
+const {validarJWT} = require('../middlewares/validar-jwt');
 const router  = express.Router();
 
 router.post('/register', [
@@ -14,6 +15,7 @@ router.post('/login', [
     check('email','Email no valido.').isEmail()
 ] ,loguearUsuario);
 
+router.get('/validar', validarJWT, validarUsuario);
 
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const Usuario = require('../models/usuario.model');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const crearUsuario = async (req, res) => {
     const { name, email, password } = req.body;
@@ -30,8 +31,21 @@ const crearUsuario = async (req, res) => {
         usuario.password = bcrypt.hashSync(password, salt);
 
         await usuario.save();
+
+        // generar JWT
+        const payload = {
+            id: usuario._id,
+            name: usuario.name,
+            rol: usuario.rol
+        }
+
+        const token = jwt.sign(payload,process.env.SECRET_JWT,{
+            expiresIn: "2h",
+        });
+
         res.status(200).json({
-            msg: ">> Usuario registrado"
+            msg: ">> Usuario registrado",
+            token
         });
 
     } catch (error) {
@@ -54,7 +68,7 @@ const loguearUsuario = async (req, res) => {
     try {
         let usuarioExiste = await Usuario.findOne({ email });
         if (!usuarioExiste) {
-            return res.json({
+            return res.status(400).json({
                 msg: "Email o contraseña incorrectos."
             });
         }else{
@@ -66,21 +80,41 @@ const loguearUsuario = async (req, res) => {
                 })
             }
 
+            // generar JWT
+        const payload = {
+            id: usuarioExiste._id,
+            name: usuarioExiste.name,
+            rol: usuarioExiste.rol
+        }
+
+        const token = jwt.sign(payload,process.env.SECRET_JWT,{
+            expiresIn: "10000ms",
+        });
+
             res.status(201).json({
                 msg: "Logueado con exito!",
-                usuarioExiste
+                name: usuarioExiste.name,
+                id: usuarioExiste._id,
+                rol: usuarioExiste.rol,
+                token
+
             })
         }
 
         
-
     } catch (error) {
         console.log(error)
     }
 }
 
+const validarUsuario = (req, res) => {
+    res.status(200).json({
+        ok: true,
+    });
+}
 
 module.exports = {
     crearUsuario,
-    loguearUsuario
+    loguearUsuario,
+    validarUsuario
 };

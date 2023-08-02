@@ -12,7 +12,7 @@ const usuarioSchema = Schema({
     },
     estado:{
         type: String,
-        default: "activo"   
+        default: "Habilitado"   
     },
     password: {
         type: String,
