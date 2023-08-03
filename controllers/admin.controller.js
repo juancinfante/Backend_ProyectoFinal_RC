@@ -52,6 +52,7 @@ const eliminarUsuario = async (req, res) => {
     }
 }
 
+
 module.exports = {
     obtenerUsuarios,
     editarUsuario,
