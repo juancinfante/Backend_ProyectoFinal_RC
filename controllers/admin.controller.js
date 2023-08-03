@@ -35,7 +35,25 @@ const editarUsuario = async (req, res) => {
     }
 }
 
+const eliminarUsuario = async (req, res) => {
+    try {
+        const usuario = await Usuario.findById(req.params.id);
+        if (!usuario) {
+            res.json({
+                mgs: "Usuario no existe."
+            })
+        }
+        await Usuario.findByIdAndDelete(req.params.id);
+        res.json({
+          msg: "Usuario eliminado."  
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     obtenerUsuarios,
-    editarUsuario
+    editarUsuario,
+    eliminarUsuario
 };
