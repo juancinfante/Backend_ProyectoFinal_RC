@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const Usuario = require('../models/usuario.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Producto = require("../models/product.model");
 
 const obtenerUsuarios = async (req, res) => {
     try {
@@ -52,9 +53,29 @@ const eliminarUsuario = async (req, res) => {
     }
 }
 
+const agregarProducto = async (req , res) =>{
+    try {
+		let producto = new Producto(req.body);
+
+		await producto.save();
+
+		res.status(201).json({
+			ok: true,
+			msg: 'producto creado',
+			producto,
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			ok: true,
+			msg: 'Hable con el administrador',
+		});
+	}
+} 
 
 module.exports = {
     obtenerUsuarios,
     editarUsuario,
-    eliminarUsuario
+    eliminarUsuario,
+    agregarProducto
 };
