@@ -91,5 +91,6 @@ module.exports = {
     obtenerUsuarios,
     editarUsuario,
     eliminarUsuario,
-    agregarProducto
+    agregarProducto,
+    obtenerProductos
 };
