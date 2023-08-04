@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Producto = require("../models/product.model");
 
+
+// USUARIO
 const obtenerUsuarios = async (req, res) => {
     try {
         const usuarios = await Usuario.find();
@@ -11,7 +13,7 @@ const obtenerUsuarios = async (req, res) => {
             usuarios
         })
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
 
@@ -53,6 +55,7 @@ const eliminarUsuario = async (req, res) => {
     }
 }
 
+// PRODUCTO
 const agregarProducto = async (req , res) =>{
     try {
 		let producto = new Producto(req.body);
@@ -71,7 +74,18 @@ const agregarProducto = async (req , res) =>{
 			msg: 'Hable con el administrador',
 		});
 	}
-} 
+}
+
+const obtenerProductos = async (req, res) => {
+    try {
+        const productos = await Producto.find();
+        res.status(200).json({
+            productos
+        })
+    } catch (error) {
+        console.log(error);        
+    }
+}
 
 module.exports = {
     obtenerUsuarios,

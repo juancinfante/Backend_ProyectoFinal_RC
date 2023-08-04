@@ -14,6 +14,10 @@ const productoSchema = Schema({
         type: String,
         default: "Habilitado"   
     },
+    imagen:{
+        type: String,
+        required: true
+    },
     detalle: {
         type: String,
         required: true
