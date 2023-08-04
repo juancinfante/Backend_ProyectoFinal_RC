@@ -1,7 +1,7 @@
 const express = require('express');
 const { check } = require('express-validator');
 const {validarJWT} = require('../middlewares/validar-jwt');
-const { obtenerUsuarios, editarUsuario, eliminarUsuario, agregarProducto, obtenerProductos, eliminarProducto, editarProducto } = require('../controllers/admin.controller');
+const { obtenerUsuarios, editarUsuario, eliminarUsuario, agregarProducto, obtenerProductos, eliminarProducto, editarProducto, obtenerProducto } = require('../controllers/admin.controller');
 const router  = express.Router();
 
 // USUARIOS
@@ -15,6 +15,8 @@ router.delete('/usuario/:id', eliminarUsuario);
 router.post('/producto', agregarProducto);
 
 router.get('/productos', obtenerProductos);
+
+router.get('/producto/:id', obtenerProducto);
 
 router.delete('/producto/:id', eliminarProducto);
 

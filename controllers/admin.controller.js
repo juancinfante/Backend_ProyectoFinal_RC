@@ -87,6 +87,29 @@ const obtenerProductos = async (req, res) => {
     }
 }
 
+const obtenerProducto = async (req, res) => {
+    try {
+        const producto = await Producto.findById(req.params.id);
+        if (!producto) {
+			return res.status(404).json({
+				ok: false,
+				msg: 'No existe un producto con este ID',
+			});
+		}
+        res.status(200).json({
+			ok: true,
+			msg: producto,
+		});
+
+    } catch (error) {
+        res.json({
+            msg: "ID NO VALIDA"
+        })      
+    }
+}
+
+
+
 const eliminarProducto = async (req, res) => {
 	try {
 		const productoEliminar = await Producto.findById(req.params.id);
@@ -143,6 +166,7 @@ module.exports = {
     eliminarUsuario,
     agregarProducto,
     obtenerProductos,
+    obtenerProducto,
     eliminarProducto,
     editarProducto
 };
