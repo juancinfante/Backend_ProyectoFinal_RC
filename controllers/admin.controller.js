@@ -16,6 +16,26 @@ const obtenerUsuarios = async (req, res) => {
         console.log(error);
     }
 }
+const obtenerUsuario = async (req, res) => {
+    try {
+        const usuario = await Usuario.findById(req.params.id);
+        if (!usuario) {
+			return res.status(404).json({
+				ok: false,
+				msg: 'No existe un usuario con este ID',
+			});
+		}
+        res.status(200).json({
+			ok: true,
+			usuario,
+		});
+
+    } catch (error) {
+        res.status(400).json({
+            msg: "ID NO VALIDA"
+        })      
+    }
+}
 
 const editarUsuario = async (req, res) => {
     try {
@@ -98,17 +118,15 @@ const obtenerProducto = async (req, res) => {
 		}
         res.status(200).json({
 			ok: true,
-			msg: producto,
+			producto,
 		});
 
     } catch (error) {
-        res.json({
+        res.status(400).json({
             msg: "ID NO VALIDA"
         })      
     }
 }
-
-
 
 const eliminarProducto = async (req, res) => {
 	try {
@@ -162,6 +180,7 @@ const editarProducto = async (req, res) => {
 };
 module.exports = {
     obtenerUsuarios,
+    obtenerUsuario,
     editarUsuario,
     eliminarUsuario,
     agregarProducto,

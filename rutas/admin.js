@@ -1,11 +1,13 @@
 const express = require('express');
 const { check } = require('express-validator');
 const {validarJWT} = require('../middlewares/validar-jwt');
-const { obtenerUsuarios, editarUsuario, eliminarUsuario, agregarProducto, obtenerProductos, eliminarProducto, editarProducto, obtenerProducto } = require('../controllers/admin.controller');
+const { obtenerUsuarios, editarUsuario, eliminarUsuario, agregarProducto, obtenerProductos, eliminarProducto, editarProducto, obtenerProducto, obtenerUsuario } = require('../controllers/admin.controller');
 const router  = express.Router();
 
 // USUARIOS
 router.get('/usuarios', obtenerUsuarios);
+
+router.get('/usuario/:id', obtenerUsuario);
 
 router.put('/editarUsuario', editarUsuario);
 
