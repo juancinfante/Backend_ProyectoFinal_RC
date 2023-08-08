@@ -15,7 +15,7 @@ router.post('/login', [
     check('email','Email no valido.').isEmail()
 ] ,loguearUsuario);
 
-router.get('/validar', validarJWT, validarUsuario);
+// router.get('/validar', validarJWT, validarUsuario);
 
 
 module.exports = router;

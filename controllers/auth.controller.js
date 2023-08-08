@@ -22,7 +22,6 @@ const crearUsuario = async (req, res) => {
                 msg: "Este email ya esta en uso"
             });
         }
-
         // Aqui parseamos el usuario, quedaria como un objeto con name, password e email
         let usuario = new Usuario(req.body)
 
@@ -45,7 +44,8 @@ const crearUsuario = async (req, res) => {
 
         res.status(200).json({
             msg: "Registrado con exito.",
-            token
+            token,
+            id: usuario._id
         });
 
     } catch (error) {
@@ -88,7 +88,7 @@ const loguearUsuario = async (req, res) => {
         }
 
         const token = jwt.sign(payload,process.env.SECRET_JWT,{
-            expiresIn: "10000ms",
+            expiresIn: "2h",
         });
 
             res.status(201).json({
