@@ -178,6 +178,8 @@ const editarProducto = async (req, res) => {
 		});
 	}
 };
+
+
 module.exports = {
     obtenerUsuarios,
     obtenerUsuario,
