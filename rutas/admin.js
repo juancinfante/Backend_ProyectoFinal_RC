@@ -9,20 +9,21 @@ router.get('/usuarios', obtenerUsuarios);
 
 router.get('/usuario/:id', obtenerUsuario);
 
-router.put('/editarUsuario', editarUsuario);
+router.put('/editarUsuario', validarJWT, editarUsuario);
 
-router.delete('/usuario/:id', eliminarUsuario);
+router.delete('/usuario/:id', validarJWT,eliminarUsuario);
 
 // PRODUCTOS
-router.post('/producto', agregarProducto);
+router.post('/producto', validarJWT,agregarProducto);
 
 router.get('/productos', obtenerProductos);
 
 router.get('/producto/:id', obtenerProducto);
 
-router.delete('/producto/:id', eliminarProducto);
+router.delete('/producto/:id',validarJWT ,eliminarProducto);
 
-router.put('/producto', editarProducto);
+router.put('/producto',validarJWT ,editarProducto);
 
+router.get('/validarjwt',validarJWT )
 
 module.exports = router;
