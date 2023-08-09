@@ -19,6 +19,7 @@ app.use(express.json());
 app.use('/auth', require('./rutas/auth'));
 app.use('/admin', require('./rutas/admin'));
 app.use('/cart', require('./rutas/pedidos'));
+app.use('/comentarios', require('./rutas/comentarios'));
 
 
 

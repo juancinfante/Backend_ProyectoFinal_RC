@@ -22,7 +22,6 @@ const agregarPedido = async (req, res) => {
             msg: 'Hable con el administrador',
         });
     }
-    console.log("funciona")
 }
 const obtenerPedido = async (req, res) => {
     try {
