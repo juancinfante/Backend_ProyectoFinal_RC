@@ -13,8 +13,12 @@ const comentarioSchema = Schema({
     texto:{
         type: String,
         required: true 
+    },
+    fecha:{
+        type: String,
+        required: true,
+        default: "-"
     }
-    
 })
 
 module.exports = model('Comentario', comentarioSchema);

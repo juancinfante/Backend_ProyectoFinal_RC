@@ -3,7 +3,7 @@ const Comentario = require('../models/comentarios.model.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const obtenerComentarios = async (res, req) => {
+const obtenerComentarios = async (req, res) => {
     try {
         const comentarios = await Comentario.find({ id_prod: req.params.id })
         res.status(200).json({
@@ -16,7 +16,7 @@ const obtenerComentarios = async (res, req) => {
         });
     }
 }
-const comentar = async (res, req) => {
+const comentar = async (req, res) => {
     try {
         let comentario = new Comentario(req.body);
 
