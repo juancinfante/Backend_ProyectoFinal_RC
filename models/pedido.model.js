@@ -13,7 +13,7 @@ const pedidoSchema = Schema({
     },
     estado:{
         type: String,
-        default: "Pendiende"   
+        default: "Pendiente"   
     },
     id_usuario: {
         type: String,
