@@ -45,7 +45,8 @@ const crearUsuario = async (req, res) => {
         res.status(200).json({
             msg: "Registrado con exito.",
             token,
-            id: usuario._id
+            id: usuario._id,
+            name: usuario.name,
         });
 
     } catch (error) {
