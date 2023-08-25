@@ -45,7 +45,9 @@ const crearUsuario = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error)
+        res.status(400).json({
+            msg: error
+        })
     }
 }
 
@@ -95,7 +97,9 @@ const loguearUsuario = async (req, res) => {
 
         
     } catch (error) {
-        console.log(error)
+        res.status(400).json({
+            msg: error
+        })
     }
 }
 

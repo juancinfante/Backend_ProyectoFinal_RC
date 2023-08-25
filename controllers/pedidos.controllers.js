@@ -44,7 +44,9 @@ const obtenerPedidos = async (req, res) => {
             pedidos
         })
     } catch (error) {
-        console.log(error);
+        res.status(400).json({
+            msg: error
+        })
     }
 }
 

@@ -13,7 +13,9 @@ const obtenerUsuarios = async (req, res) => {
             usuarios
         })
     } catch (error) {
-        console.log(error);
+       res.status(400).json({
+            msg: error
+        })
     }
 }
 const obtenerUsuario = async (req, res) => {
@@ -71,7 +73,9 @@ const eliminarUsuario = async (req, res) => {
           msg: "Usuario eliminado."  
         })
     } catch (error) {
-        console.log(error)
+        res.status(400).json({
+            msg: error
+        })
     }
 }
 
@@ -88,7 +92,6 @@ const agregarProducto = async (req , res) =>{
 			producto,
 		});
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			ok: true,
 			msg: 'Hable con el administrador',
@@ -103,7 +106,9 @@ const obtenerProductos = async (req, res) => {
             productos
         })
     } catch (error) {
-        console.log(error);        
+        res.status(400).json({
+            msg: error
+        })       
     }
 }
 
@@ -171,7 +176,6 @@ const editarProducto = async (req, res) => {
 			msg: 'producto editado',
 		});
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			ok: false,
 			msg: 'hable con el administrador',

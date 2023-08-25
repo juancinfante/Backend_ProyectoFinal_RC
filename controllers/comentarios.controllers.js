@@ -27,7 +27,9 @@ const comentar = async (req, res) => {
             msg: 'Comentario enviado!',
         });
     } catch (error) {
-        console.log(error);
+        res.status(400).json({
+            msg: error
+        })
     }
 }
 
