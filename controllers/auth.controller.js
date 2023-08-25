@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const crearUsuario = async (req, res) => {
     const { name, email, password } = req.body;
 
-    //Manejo de errores
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.json({
@@ -14,7 +13,6 @@ const crearUsuario = async (req, res) => {
         })
     }
 
-    // Validar si el email ya existe
     try {
         let usuarioExiste = await Usuario.findOne({ email });
         if (usuarioExiste) {
@@ -22,16 +20,13 @@ const crearUsuario = async (req, res) => {
                 msg: "Este email ya esta en uso"
             });
         }
-        // Aqui parseamos el usuario, quedaria como un objeto con name, password e email
         let usuario = new Usuario(req.body)
 
-        // Luego debemos encriptar la contraseña
         const salt = bcrypt.genSaltSync(10);
         usuario.password = bcrypt.hashSync(password, salt);
 
         await usuario.save();
 
-        // generar JWT
         const payload = {
             id: usuario._id,
             name: usuario.name,
@@ -57,7 +52,6 @@ const crearUsuario = async (req, res) => {
 const loguearUsuario = async (req, res) => {
     const { email, password } = req.body;
 
-    //Manejo de errores
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.json({
@@ -65,7 +59,6 @@ const loguearUsuario = async (req, res) => {
         })
     }
 
-    // Validar si el email ya existe
     try {
         let usuarioExiste = await Usuario.findOne({ email });
         if (!usuarioExiste) {
@@ -73,7 +66,6 @@ const loguearUsuario = async (req, res) => {
                 msg: "Email o contraseña incorrectos."
             });
         }else{
-            // Ademas de chequear email debemos chequear contraseña
             const validarContraseña = bcrypt.compareSync(password, usuarioExiste.password);
             if (!validarContraseña) {
                 return res.status(400).json({
@@ -81,7 +73,6 @@ const loguearUsuario = async (req, res) => {
                 })
             }
 
-            // generar JWT
         const payload = {
             id: usuarioExiste._id,
             name: usuarioExiste.name,

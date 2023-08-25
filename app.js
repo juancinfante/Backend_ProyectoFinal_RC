@@ -10,10 +10,8 @@ app.listen(PORT,() => {
 })
 app.use(cors());
 
-// Conecta a base de datos
 dbConnection();
 
-// Lectura y parseo del body
 app.use(express.json());
 
 
